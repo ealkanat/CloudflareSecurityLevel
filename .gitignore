@@ -4,4 +4,7 @@ config.py
 # Python
 __pycache__/
 *.py[cod]
-*$py.class 
+*$py.class
+
+# macOS
+.DS_Store 

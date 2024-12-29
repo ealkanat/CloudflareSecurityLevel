@@ -1,4 +1,4 @@
-# Cloudflare Security Level Manager
+# CF Security Level Controller
 
 A Python script to manage Cloudflare's security level settings via their API.
 
@@ -37,7 +37,7 @@ By default, this will attempt to set the security level to "low" and only allow 
 
 ### Forced Update
 To modify the script to force a security level change:
-1. Open `cf_change_security_level.py`
+1. Open `cf_security_level_controller.py`
 2. Change `main(forced=False)` to `main(forced=True)`
 
 ## Features
