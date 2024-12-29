@@ -51,7 +51,6 @@ To modify the script to force a security level change:
 
 - Python 3.x
 - requests library (`pip install requests`)
-- python-dotenv library (`pip install python-dotenv`)
 
 ## Security Notes
 
@@ -64,3 +63,8 @@ To modify the script to force a security level change:
 - "Failed to get current security level": Unable to retrieve current settings
 - "Invalid security level": Specified level not in allowed values
 - "Update cancelled": New security level is lower than current (without force)
+
+## API Documentation
+
+For more details about the Cloudflare API endpoint used in this script, see:
+[Cloudflare API - Edit Zone Setting](https://developers.cloudflare.com/api/resources/zones/subresources/settings/methods/edit/)
