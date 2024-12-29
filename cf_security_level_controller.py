@@ -1,5 +1,6 @@
 """Script to update Cloudflare security level settings."""
 
+import argparse
 import requests
 from config import CLOUDFLARE_ZONE_ID as ZONE_ID, CLOUDFLARE_EMAIL, CLOUDFLARE_API_KEY
 
@@ -56,13 +57,20 @@ def set_security_level(new_value, forced=False):
         print(f"Failed to update security level. Status code: {response.status_code}")
         return False
 
-def main(forced=False):
+def main(security_level=None, forced=False):
     """Execute the main security level update logic.
     
     Args:
+        security_level (str): Target security level to set
         forced (bool): If True, bypasses the priority check
     """
-    target_security_level = "low"
+    if security_level is None:
+        security_level = "low"  # default value
+        
+    if security_level not in PRIORITY:
+        print(f"Invalid security level. Must be one of: {', '.join(PRIORITY)}")
+        return
+
     current_value = get_current_security_level()
     
     if current_value is None:
@@ -74,12 +82,17 @@ def main(forced=False):
         return
         
     current_priority = PRIORITY.index(current_value)
-    new_priority = PRIORITY.index(target_security_level)
+    new_priority = PRIORITY.index(security_level)
     
     if new_priority > current_priority or forced:
-        set_security_level(target_security_level, forced=forced)
+        set_security_level(security_level, forced=forced)
     else:
-        print(f"Update cancelled. New value '{target_security_level}' is lower than current level ({current_value}). Use forced=True to override.")
+        print(f"Update cancelled. New value '{security_level}' is lower than current level ({current_value}). Use --force to override.")
 
 if __name__ == "__main__":
-    main(forced=False)  # Change to True to force security level changes
+    parser = argparse.ArgumentParser(description='Manage Cloudflare security level settings.')
+    parser.add_argument('--security-level', choices=PRIORITY, help='Set security level')
+    parser.add_argument('--force', action='store_true', help='Force security level change')
+    
+    args = parser.parse_args()
+    main(security_level=args.security_level, forced=args.force)

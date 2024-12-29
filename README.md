@@ -33,12 +33,25 @@ CLOUDFLARE_API_KEY = "your_api_key"
 
 ### Basic Usage
 
-By default, this will attempt to set the security level to "low" and only allow increasing security levels.
+```bash
+# Set security level to low (default)
+python cf_security_level_controller.py
+
+# Set specific security level
+python cf_security_level_controller.py --security-level medium
+
+# Force set security level (bypass priority check)
+python cf_security_level_controller.py --security-level low --force
+```
+
+Available security levels: off, essentially_off, low, medium, high, under_attack
 
 ### Forced Update
-To modify the script to force a security level change:
-1. Open `cf_security_level_controller.py`
-2. Change `main(forced=False)` to `main(forced=True)`
+
+Use the `--force` flag to bypass the security level priority check:
+```bash
+python cf_security_level_controller.py --security-level low --force
+```
 
 ## Features
 
